@@ -6,6 +6,7 @@ import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
 import { AppContext } from "./libs/contextLib";
 import { Auth } from "aws-amplify";
+import {onError} from "./libs/errorLib";
 
 function App() {
   const history = useHistory();
@@ -26,7 +27,7 @@ function App() {
     catch(e) {
       console.log(e);
       if (e !== 'No current user') {
-        alert(e);
+        onError(e);
       }
     }
 
