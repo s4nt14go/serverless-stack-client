@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import {FormGroup, FormControl, ControlLabel, HelpBlock} from "react-bootstrap";
 import { CardElement, injectStripe } from "react-stripe-elements";
 import LoaderButton from "./LoaderButton";
 import { useFormFields } from "../libs/hooksLib";
@@ -35,7 +35,7 @@ function BillingForm({ isLoading, onSubmit, ...props }) {
     onSubmit(fields.storage, { token, error });
   }
 
-  return (
+  return (<>
     <form className="BillingForm" onSubmit={handleSubmitClick}>
       <FormGroup bsSize="large" controlId="storage">
         <ControlLabel>Storage</ControlLabel>
@@ -74,8 +74,12 @@ function BillingForm({ isLoading, onSubmit, ...props }) {
       >
         Purchase
       </LoaderButton>
+      <HelpBlock>
+        Try this card number to simulate a charge<br />
+        4242 4242 4242 4242
+      </HelpBlock>
     </form>
-  );
+  </>);
 }
 
 export default injectStripe(BillingForm);
