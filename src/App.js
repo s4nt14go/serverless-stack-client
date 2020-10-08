@@ -24,8 +24,7 @@ function App() {
 
   async function onLoad() {
     try {
-      const response = await Auth.currentSession();
-      console.log('Auth.currentSession', response);
+      await Auth.currentSession();
       userHasAuthenticated(true);
     }
     catch(e) {
