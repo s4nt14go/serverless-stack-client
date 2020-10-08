@@ -29,7 +29,7 @@ function App() {
     }
     catch(e) {
       console.l(e);
-      if (e !== 'No current user ') {
+      if (e !== 'No current user') {
         onError(e);
       }
     }

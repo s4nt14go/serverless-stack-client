@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Amplify } from 'aws-amplify';
 import config from './config';
 
-console.l = process.env.NODE_ENV === "development"? console.log : () => null;
+console.l = process.env.REACT_APP_STAGE === "prod"? () => null : console.log;
 
 Amplify.configure({
   Auth: {
