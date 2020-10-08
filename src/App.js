@@ -28,7 +28,7 @@ function App() {
       userHasAuthenticated(true);
     }
     catch(e) {
-      console.log(e);
+      console.l(e);
       if (e !== 'No current user ') {
         onError(e);
       }

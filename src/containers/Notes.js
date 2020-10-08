@@ -30,7 +30,7 @@ export default function Notes() {
         if (attachment) {
           note.attachmentURL = await Storage.vault.get(attachment);
         }
-        console.log(note);
+        console.l(note);
 
         setContent(content);
         setNote(note);

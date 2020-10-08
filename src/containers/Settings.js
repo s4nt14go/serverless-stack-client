@@ -24,9 +24,9 @@ export default function Settings() {
   }
 
   async function handleFormSubmit(storage, { token, error }) {
-    console.log('storage', storage);
-    console.log('token', token);
-    console.log('error', error);
+    console.l('storage', storage);
+    console.l('token', token);
+    console.l('error', error);
     if (error) {
       onError(error);
       return;
