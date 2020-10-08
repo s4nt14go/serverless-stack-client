@@ -7,6 +7,9 @@ import { LinkContainer } from "react-router-bootstrap";
 import { AppContext } from "./libs/contextLib";
 import { Auth } from "aws-amplify";
 import {onError} from "./libs/errorLib";
+import { initSentry } from './libs/errorLib';
+
+initSentry();
 
 function App() {
   const history = useHistory();
