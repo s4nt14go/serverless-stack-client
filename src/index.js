@@ -7,7 +7,14 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Amplify } from 'aws-amplify';
 import config from './config';
 
-console.l = process.env.REACT_APP_STAGE === "prod"? () => null : console.log;
+if (process.env.REACT_APP_STAGE === "prod") {
+  console.l = () => null;
+} else {
+  console.l = console.log;
+  console.l('REACT_APP_STAGE', process.env.REACT_APP_STAGE);
+  console.l('config.apiGateway.URL', config.apiGateway.URL);
+}
+
 
 Amplify.configure({
   Auth: {
