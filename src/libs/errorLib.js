@@ -24,7 +24,8 @@ export function logError(error, errorInfo = null) {
 }
 
 export function onError(error) {
-  if (!error) return console.log('No error?', error);
+  console.log(error);
+  if (!error) return console.log('No error?');
   let errorInfo = {};
   let message = error.toString();
 
