@@ -6,8 +6,8 @@ import Loadable from 'react-loadable';
 import LoadingComponent from "./components/LoadingComponent";
 
 
-const [AsyncHome, AsyncLogin, AsyncNotes, AsyncSignup, AsyncNewNote, AsyncNotFound, AsyncSettings] =
-  ['Home', 'Login', 'Notes', 'Signup', 'NewNote', 'NotFound', 'Settings'].map(e => {
+const [AsyncHome, AsyncLogin, AsyncNotes, AsyncSignup, AsyncNewNote, AsyncNotFound, AsyncSettings, AsyncResetPassword] =
+  ['Home', 'Login', 'Notes', 'Signup', 'NewNote', 'NotFound', 'Settings', 'ResetPassword'].map(e => {
   return Loadable({
     loader: () => import(`./containers/${e}`),
     loading: LoadingComponent
@@ -35,6 +35,9 @@ export default function Routes() {
       <AuthenticatedRoute exact path="/notes/:id">
         <AsyncNotes />
       </AuthenticatedRoute>
+      <UnauthenticatedRoute exact path="/login/reset">
+        <AsyncResetPassword />
+      </UnauthenticatedRoute>
       <Route>
         <AsyncNotFound />
       </Route>

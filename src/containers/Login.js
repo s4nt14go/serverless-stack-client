@@ -6,6 +6,7 @@ import { useAppContext } from "../libs/contextLib";
 import LoaderButton from "../components/LoaderButton";
 import {onError} from "../libs/errorLib";
 import { useFormFields } from "../libs/hooksLib";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const { userHasAuthenticated } = useAppContext();
@@ -54,6 +55,7 @@ export default function Login() {
             type="password"
           />
         </FormGroup>
+        <Link to="/login/reset">Forgot password?</Link>
         <LoaderButton
           block
           type="submit"
