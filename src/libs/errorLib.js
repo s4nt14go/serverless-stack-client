@@ -27,7 +27,7 @@ export function onError(error) {
   console.log(error);
   if (!error) return console.log('No error?');
   let errorInfo = {};
-  let message = error.toString();
+  let message = JSON.stringify(error);
 
   // Auth errors
   if (!(error instanceof Error) && error.message) {

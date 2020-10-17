@@ -14,7 +14,10 @@ const configs = {
       USER_POOL_ID: process.env.REACT_APP_dev_COGNITO_USER_POOL_ID,
       APP_CLIENT_ID: process.env.REACT_APP_dev_COGNITO_APP_CLIENT_ID,
       IDENTITY_POOL_ID: process.env.REACT_APP_dev_COGNITO_IDENTITY_POOL_ID
-    }
+    },
+    social: {
+      FB: process.env.REACT_APP_dev_FACEBOOK_APP_ID,
+    },
   },
 
   prod: {
@@ -32,7 +35,10 @@ const configs = {
       USER_POOL_ID: process.env.REACT_APP_prod_COGNITO_USER_POOL_ID,
       APP_CLIENT_ID: process.env.REACT_APP_prod_COGNITO_APP_CLIENT_ID,
       IDENTITY_POOL_ID: process.env.REACT_APP_prod_COGNITO_IDENTITY_POOL_ID
-    }
+    },
+    social: {
+      FB: process.env.REACT_APP_prod_FACEBOOK_APP_ID,
+    },
   },
 
   work: {
@@ -50,7 +56,10 @@ const configs = {
       USER_POOL_ID: process.env.REACT_APP_work_COGNITO_USER_POOL_ID,
       APP_CLIENT_ID: process.env.REACT_APP_work_COGNITO_APP_CLIENT_ID,
       IDENTITY_POOL_ID: process.env.REACT_APP_work_COGNITO_IDENTITY_POOL_ID
-    }
+    },
+    social: {
+      FB: process.env.REACT_APP_dev_FACEBOOK_APP_ID,
+    },
   },
 
 };

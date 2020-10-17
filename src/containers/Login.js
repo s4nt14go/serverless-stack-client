@@ -7,6 +7,7 @@ import LoaderButton from "../components/LoaderButton";
 import {onError} from "../libs/errorLib";
 import { useFormFields } from "../libs/hooksLib";
 import { Link } from "react-router-dom";
+import FacebookButton from "../components/FacebookButton";
 
 export default function Login() {
   const { userHasAuthenticated } = useAppContext();
@@ -38,6 +39,10 @@ export default function Login() {
   return (
     <div className="Login">
       <form onSubmit={handleSubmit}>
+        <FacebookButton
+          onLogin={() => userHasAuthenticated(true)}
+        />
+        <hr />
         <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email</ControlLabel>
           <FormControl
