@@ -4,6 +4,7 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import Loadable from 'react-loadable';
 import LoadingComponent from "./components/LoadingComponent";
+import ChangePassword from "./containers/ChangePassword";
 
 
 const [AsyncHome, AsyncLogin, AsyncNotes, AsyncSignup, AsyncNewNote, AsyncNotFound, AsyncSettings, AsyncResetPassword] =
@@ -38,6 +39,9 @@ export default function Routes() {
       <UnauthenticatedRoute exact path="/login/reset">
         <AsyncResetPassword />
       </UnauthenticatedRoute>
+      <AuthenticatedRoute exact path="/settings/password">
+        <ChangePassword />
+      </AuthenticatedRoute>
       <Route>
         <AsyncNotFound />
       </Route>
