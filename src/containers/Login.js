@@ -41,10 +41,10 @@ export default function Login() {
   return (
     <div className="Login">
       <form onSubmit={handleSubmit}>
-        <FacebookButton
-          onLogin={() => userHasAuthenticated(true)}
-        />
-        <hr />
+        {false && <>
+          <FacebookButton onLogin={() => userHasAuthenticated(true)} />
+          <hr />
+        </>}
         <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email</ControlLabel>
           <FormControl

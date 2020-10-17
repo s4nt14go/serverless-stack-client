@@ -103,10 +103,10 @@ export default function Signup() {
   function renderForm() {
     return (
       <form onSubmit={handleSubmit}>
-        <FacebookButton
-          onLogin={() => userHasAuthenticated(true)}
-        />
-        <hr />
+        {false && <>
+          <FacebookButton onLogin={() => userHasAuthenticated(true)} />
+          <hr />
+        </>}
         <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email</ControlLabel>
           <FormControl
