@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import FacebookButton from "../components/FacebookButton";
 
 export default function Login() {
-  const { userHasAuthenticated } = useAppContext();
+  const { userHasAuthenticated, setAuthWithEmail } = useAppContext();
 
   const [fields, handleFieldChange] = useFormFields({
     email: "",
@@ -28,7 +28,9 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      await Auth.signIn(fields.email, fields.password);
+      const signIn = await Auth.signIn(fields.email, fields.password);
+      console.l('signIn', signIn);
+      setAuthWithEmail(signIn.attributes?.email);
       userHasAuthenticated(true);
     } catch (e) {
       onError(e);

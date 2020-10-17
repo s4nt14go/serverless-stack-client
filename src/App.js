@@ -18,6 +18,7 @@ function App() {
 
   const [isAuthenticated, userHasAuthenticated] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(true);
+  const [authWithEmail, setAuthWithEmail] = useState(false);
 
   useEffect(() => {
     loadFacebookSDK();
@@ -61,6 +62,7 @@ function App() {
   async function handleLogout() {
     await Auth.signOut();
     userHasAuthenticated(false);
+    setAuthWithEmail(false);
     history.push("/login");
   }
 
@@ -97,7 +99,7 @@ function App() {
         </Navbar.Collapse>
       </Navbar>
       <ErrorBoundary>
-        <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+        <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated, authWithEmail, setAuthWithEmail }}>
           <Routes />
         </AppContext.Provider>
       </ErrorBoundary>
