@@ -17,8 +17,11 @@ function App() {
   const history = useHistory();
 
   const [isAuthenticated, userHasAuthenticated] = useState(false);
+  const [fbIdentityId, setFbIdentityId] = useState();// We set this when the user logs in with facebook so we can:
+  // * Hide the buttons to change email and password in settings
+  // * As Amplify doesn't set correctly the identityId when user logs in with facebook, Storage.vault.put fails
+  // so we'll use AWS.S3().puObject instead
   const [isAuthenticating, setIsAuthenticating] = useState(true);
-  const [authWithEmail, setAuthWithEmail] = useState(false);
 
   useEffect(() => {
     loadFacebookSDK();
@@ -44,9 +47,9 @@ function App() {
     window.fbAsyncInit = function() {
       window.FB.init({
         appId            : config.social.FB,
-        autoLogAppEvents : true,
+        cookie           : true,
         xfbml            : true,
-        version          : 'v3.1'
+        version          : 'v8.0'
       });
     };
 
@@ -62,7 +65,6 @@ function App() {
   async function handleLogout() {
     await Auth.signOut();
     userHasAuthenticated(false);
-    setAuthWithEmail(false);
     history.push("/login");
   }
 
@@ -99,7 +101,7 @@ function App() {
         </Navbar.Collapse>
       </Navbar>
       <ErrorBoundary>
-        <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated, authWithEmail, setAuthWithEmail }}>
+        <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated, fbIdentityId, setFbIdentityId }}>
           <Routes />
         </AppContext.Provider>
       </ErrorBoundary>

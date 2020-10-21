@@ -12,7 +12,8 @@ const [AsyncHome, AsyncLogin, AsyncNotes, AsyncSignup, AsyncNewNote, AsyncNotFou
   ['Home', 'Login', 'Notes', 'Signup', 'NewNote', 'NotFound', 'Settings', 'ResetPassword'].map(e => {
   return Loadable({
     loader: () => import(`./containers/${e}`),
-    loading: LoadingComponent
+    loading: LoadingComponent,
+    delay: 300,
   })
 });
 

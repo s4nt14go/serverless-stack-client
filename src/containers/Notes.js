@@ -1,12 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { API, Storage } from "aws-amplify";
+import {API, Storage} from "aws-amplify";
 import { onError } from "../libs/errorLib";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./Notes.css";
 import { s3Upload } from "../libs/awsLib";
+import {useAppContext} from "../libs/contextLib";
+import AWS from 'aws-sdk/global';
 
 export default function Notes() {
   const file = useRef(null);
@@ -16,6 +18,7 @@ export default function Notes() {
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const { fbIdentityId } = useAppContext();
 
   useEffect(() => {
     function loadNote() {
@@ -28,7 +31,20 @@ export default function Notes() {
         const { content, attachment } = note;
 
         if (attachment) {
-          note.attachmentURL = await Storage.vault.get(attachment);
+          if (!fbIdentityId) {
+            note.attachmentURL = await Storage.vault.get(attachment);
+          } else {
+            if (!fbIdentityId) console.error('Set fbIdentityId!!', fbIdentityId);
+            const params = {
+              Bucket: config.s3.BUCKET,
+              Key: `private/${fbIdentityId}/${attachment}`,
+            };
+            const s3 = new AWS.S3();
+            s3.getSignedUrl('getObject', params, function (err, url) {
+              if (err) return onError(err);
+              setNote(prevState => ({...prevState, attachmentURL: url}))
+            });
+          }
         }
         console.l(note);
 
@@ -40,7 +56,7 @@ export default function Notes() {
     }
 
     onLoad();
-  }, [id]);
+  }, [id, fbIdentityId]);
 
   function validateForm() {
     return content.length > 0;
@@ -77,7 +93,7 @@ export default function Notes() {
 
     try {
       if (file.current) {
-        attachment = await s3Upload(file.current);
+        attachment = await s3Upload(file.current, fbIdentityId);
       }
 
       await saveNote({
@@ -95,7 +111,7 @@ export default function Notes() {
     return API.del("notes", `/notes/${id}`);
   }
 
-  async function handleDelete(event) {
+  async function handleDelete(_event) {
 
     const confirmed = window.confirm(
       "Are you sure you want to delete this note?"

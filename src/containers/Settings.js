@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { API } from "aws-amplify";
+import {API} from "aws-amplify";
 import { onError } from "../libs/errorLib";
 import config from "../config";
 import { Elements, StripeProvider } from "react-stripe-elements";
@@ -11,7 +11,7 @@ import LoaderButton from "../components/LoaderButton";
 import { useAppContext } from "../libs/contextLib";
 
 export default function Settings() {
-  const { authWithEmail } = useAppContext();
+  const { fbIdentityId } = useAppContext();
 
   const [stripe, setStripe] = useState(null);
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function Settings() {
 
   return (
     <div className="Settings">
-      {authWithEmail && <>
+      {!fbIdentityId && <>
         <LinkContainer to="/settings/email">
           <LoaderButton block bsSize="large">
             Change Email

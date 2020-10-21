@@ -58,7 +58,7 @@ const configs = {
       IDENTITY_POOL_ID: process.env.REACT_APP_work_COGNITO_IDENTITY_POOL_ID
     },
     social: {
-      FB: process.env.REACT_APP_dev_FACEBOOK_APP_ID,
+      FB: process.env.REACT_APP_work_FACEBOOK_APP_ID,
     },
   },
 

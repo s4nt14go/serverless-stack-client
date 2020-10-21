@@ -5,10 +5,12 @@ import LoaderButton from "../components/LoaderButton";
 import { onError } from "../libs/errorLib";
 import config from "../config";
 import "./NewNote.css";
-import { API } from "aws-amplify";
+import {API} from "aws-amplify";
 import { s3Upload } from "../libs/awsLib";
+import {useAppContext} from "../libs/contextLib";
 
 export default function NewNote() {
+  const { fbIdentityId } = useAppContext();
   const file = useRef(null);
   const history = useHistory();
   const [content, setContent] = useState("");
@@ -36,7 +38,7 @@ export default function NewNote() {
     setIsLoading(true);
 
     try {
-      const attachment = file.current ? await s3Upload(file.current) : null;
+      const attachment = file.current ? await s3Upload(file.current, fbIdentityId) : null;
 
       await createNote({ content, attachment });
       history.push("/");

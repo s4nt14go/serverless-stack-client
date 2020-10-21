@@ -1,7 +1,10 @@
-import React, { Component } from "react";
-import { Auth } from "aws-amplify";
+import React, { useEffect, useState} from "react";
+import {API, Auth} from "aws-amplify";
 import LoaderButton from "./LoaderButton";
 import {onError} from "../libs/errorLib";
+import {useAppContext} from "../libs/contextLib";
+import AWS from "aws-sdk/global";
+import config from '../config';
 
 function waitForInit() {
   return new Promise((res, _rej) => {
@@ -16,42 +19,40 @@ function waitForInit() {
   });
 }
 
-export default class FacebookButton extends Component {
-  constructor(props) {
-    super(props);
+export default function FacebookButton() {
+  const { userHasAuthenticated, setFbIdentityId } = useAppContext();
+  const [isLoading, setIsLoading] = useState(true);
 
-    this.state = {
-      isLoading: true
-    };
-  }
 
-  async componentDidMount() {
-    await waitForInit();
-    this.setState({ isLoading: false });
-  }
+  useEffect(() => {
+    (async () => {
+      await waitForInit();
+      setIsLoading(false);
+    })();
+  }, []);
 
-  statusChangeCallback = response => {
+  const statusChangeCallback = response => {
     if (response.status === "connected") {
-      this.handleResponse(response.authResponse);
+      handleResponse(response.authResponse);
     } else {
       onError(response);
     }
   };
 
-  checkLoginState = () => {
-    window.FB.getLoginStatus(this.statusChangeCallback);
+  const checkLoginState = () => {
+    window.FB.getLoginStatus(statusChangeCallback);
   };
 
-  handleClick = () => {
-    window.FB.login(this.checkLoginState, {scope: "public_profile,email"});
+  const handleClick = () => {
+    window.FB.login(checkLoginState, {scope: "public_profile,email"});
   };
 
-  async handleResponse(data) {
+  async function handleResponse(data) {
     const { email, accessToken: token, expiresIn } = data;
     const expires_at = expiresIn * 1000 + new Date().getTime();
     const user = { email };
 
-    this.setState({ isLoading: true });
+    setIsLoading(true);
 
     try {
       const response = await Auth.federatedSignIn(
@@ -59,28 +60,29 @@ export default class FacebookButton extends Component {
         { token, expires_at },
         user
       );
-      console.l(response);
-      this.setState({ isLoading: false });
-      this.props.onLogin(response);
+      const indentityId = await API.get("notes", "/identity-id");
+      setFbIdentityId(indentityId);
+      AWS.config.update({ region: config.cognito.REGION,
+        credentials: new AWS.Credentials(response.accessKeyId, response.secretAccessKey, response.sessionToken) });
+      userHasAuthenticated(true);
+      setIsLoading(false);
     } catch (e) {
-      this.setState({ isLoading: false });
+      setIsLoading(false);
       onError(e);
     }
   }
 
-  render() {
-    return (
-      <LoaderButton
-        block
-        bsSize="large"
-        bsStyle="primary"
-        className="FacebookButton"
-        text="Login with Facebook"
-        onClick={this.handleClick}
-        disabled={this.state.isLoading}
-      >
-        Login with Facebook
-      </LoaderButton>
-    );
-  }
+  return (
+    <LoaderButton
+      block
+      bsSize="large"
+      bsStyle="primary"
+      className="FacebookButton"
+      text="Login with Facebook"
+      onClick={handleClick}
+      disabled={isLoading}
+    >
+      Login with Facebook
+    </LoaderButton>
+  );
 }

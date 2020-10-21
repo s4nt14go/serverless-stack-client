@@ -23,7 +23,7 @@ export default function Signup() {
   });
   const history = useHistory();
   const [newUser, setNewUser] = useState(null);
-  const { userHasAuthenticated, setAuthWithEmail } = useAppContext();
+  const { userHasAuthenticated, setFbIdentityId } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
@@ -65,7 +65,7 @@ export default function Signup() {
       await Auth.confirmSignUp(fields.email, fields.confirmationCode);
       const signIn = await Auth.signIn(fields.email, fields.password);
       console.l('signIn', signIn);
-      setAuthWithEmail(signIn.attributes?.email);
+      setFbIdentityId(false);
       userHasAuthenticated(true);
       history.push("/");
     } catch (e) {
@@ -103,10 +103,8 @@ export default function Signup() {
   function renderForm() {
     return (
       <form onSubmit={handleSubmit}>
-        {false && <>
-          <FacebookButton onLogin={() => userHasAuthenticated(true)} />
-          <hr />
-        </>}
+        <FacebookButton />
+        <hr />
         <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email</ControlLabel>
           <FormControl
