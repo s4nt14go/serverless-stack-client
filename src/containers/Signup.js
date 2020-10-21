@@ -103,8 +103,8 @@ export default function Signup() {
   function renderForm() {
     return (
       <form onSubmit={handleSubmit}>
-          <FacebookButton />
-          <hr />
+        <FacebookButton />
+        <hr />
         <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email</ControlLabel>
           <FormControl

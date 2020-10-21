@@ -42,7 +42,6 @@ export default function Notes() {
             };
             s3.getSignedUrl('getObject', params, function (err, url) {
               if (err) return onError(err);
-              console.log('Signed URL: ' + url);
               setNote(prevState => ({...prevState, attachmentURL: url}))
             });
           }

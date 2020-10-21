@@ -28,10 +28,7 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      const signIn = await Auth.signIn(fields.email, fields.password);
-      console.l('signIn', signIn);
-      const currCreds = await Auth.currentCredentials();
-      console.l('currCreds', currCreds);
+      await Auth.signIn(fields.email, fields.password);
       setFbIdentityId(false);
       userHasAuthenticated(true);
     } catch (e) {
