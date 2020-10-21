@@ -9,7 +9,6 @@ import "./Notes.css";
 import { s3Upload } from "../libs/awsLib";
 import {useAppContext} from "../libs/contextLib";
 import AWS from 'aws-sdk/global';
-const s3 = new AWS.S3();
 
 export default function Notes() {
   const file = useRef(null);
@@ -40,6 +39,7 @@ export default function Notes() {
               Bucket: config.s3.BUCKET,
               Key: `private/${fbIdentityId}/${attachment}`,
             };
+            const s3 = new AWS.S3();
             s3.getSignedUrl('getObject', params, function (err, url) {
               if (err) return onError(err);
               setNote(prevState => ({...prevState, attachmentURL: url}))
