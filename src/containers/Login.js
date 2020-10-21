@@ -6,9 +6,11 @@ import { useAppContext } from "../libs/contextLib";
 import LoaderButton from "../components/LoaderButton";
 import {onError} from "../libs/errorLib";
 import { useFormFields } from "../libs/hooksLib";
+import { Link } from "react-router-dom";
+import FacebookButton from "../components/FacebookButton";
 
 export default function Login() {
-  const { userHasAuthenticated } = useAppContext();
+  const { userHasAuthenticated, setFbIdentityId } = useAppContext();
 
   const [fields, handleFieldChange] = useFormFields({
     email: "",
@@ -26,7 +28,11 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      await Auth.signIn(fields.email, fields.password);
+      const signIn = await Auth.signIn(fields.email, fields.password);
+      console.l('signIn', signIn);
+      const currCreds = await Auth.currentCredentials();
+      console.l('currCreds', currCreds);
+      setFbIdentityId(false);
       userHasAuthenticated(true);
     } catch (e) {
       onError(e);
@@ -37,6 +43,8 @@ export default function Login() {
   return (
     <div className="Login">
       <form onSubmit={handleSubmit}>
+        <FacebookButton />
+        <hr />
         <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email</ControlLabel>
           <FormControl
@@ -54,6 +62,7 @@ export default function Login() {
             type="password"
           />
         </FormGroup>
+        <Link to="/login/reset">Forgot password?</Link>
         <LoaderButton
           block
           type="submit"
@@ -66,4 +75,4 @@ export default function Login() {
       </form>
     </div>
   );
-}
+};

@@ -36,7 +36,6 @@ export default function Home() {
   }
 
   function renderNotesList(notes) {
-    console.l(notes);
     return [{}].concat(notes).map((note, i) =>
       i !== 0 ? (
         <LinkContainer key={note.noteId} to={`/notes/${note.noteId}`}>

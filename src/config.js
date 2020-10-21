@@ -3,36 +3,42 @@ const configs = {
     STRIPE_KEY: process.env.REACT_APP_STRIPE_KEY,
     s3: {
       REGION: process.env.REACT_APP_dev_S3_REGION,
-      BUCKET: process.env.REACT_APP_cdk_dev_S3_BUCKET
+      BUCKET: process.env.REACT_APP_dev_S3_BUCKET
     },
     apiGateway: {
       REGION: process.env.REACT_APP_dev_API_REGION,
-      URL: process.env.REACT_APP_cdk_dev_API_URL
+      URL: process.env.REACT_APP_dev_API_URL
     },
     cognito: {
       REGION: process.env.REACT_APP_dev_COGNITO_REGION,
-      USER_POOL_ID: process.env.REACT_APP_cdk_dev_COGNITO_USER_POOL_ID,
-      APP_CLIENT_ID: process.env.REACT_APP_cdk_dev_COGNITO_APP_CLIENT_ID,
-      IDENTITY_POOL_ID: process.env.REACT_APP_cdk_dev_COGNITO_IDENTITY_POOL_ID
-    }
+      USER_POOL_ID: process.env.REACT_APP_dev_COGNITO_USER_POOL_ID,
+      APP_CLIENT_ID: process.env.REACT_APP_dev_COGNITO_APP_CLIENT_ID,
+      IDENTITY_POOL_ID: process.env.REACT_APP_dev_COGNITO_IDENTITY_POOL_ID
+    },
+    social: {
+      FB: process.env.REACT_APP_dev_FACEBOOK_APP_ID,
+    },
   },
 
   prod: {
     STRIPE_KEY: process.env.REACT_APP_STRIPE_KEY,
     s3: {
       REGION: process.env.REACT_APP_prod_S3_REGION,
-      BUCKET: process.env.REACT_APP_cdk_prod_S3_BUCKET
+      BUCKET: process.env.REACT_APP_prod_S3_BUCKET
     },
     apiGateway: {
       REGION: process.env.REACT_APP_prod_API_REGION,
-      URL: process.env.REACT_APP_cdk_prod_API_URL
+      URL: process.env.REACT_APP_prod_API_URL
     },
     cognito: {
       REGION: process.env.REACT_APP_prod_COGNITO_REGION,
-      USER_POOL_ID: process.env.REACT_APP_cdk_prod_COGNITO_USER_POOL_ID,
-      APP_CLIENT_ID: process.env.REACT_APP_cdk_prod_COGNITO_APP_CLIENT_ID,
-      IDENTITY_POOL_ID: process.env.REACT_APP_cdk_prod_COGNITO_IDENTITY_POOL_ID
-    }
+      USER_POOL_ID: process.env.REACT_APP_prod_COGNITO_USER_POOL_ID,
+      APP_CLIENT_ID: process.env.REACT_APP_prod_COGNITO_APP_CLIENT_ID,
+      IDENTITY_POOL_ID: process.env.REACT_APP_prod_COGNITO_IDENTITY_POOL_ID
+    },
+    social: {
+      FB: process.env.REACT_APP_prod_FACEBOOK_APP_ID,
+    },
   },
 
   work: {
@@ -50,7 +56,10 @@ const configs = {
       USER_POOL_ID: process.env.REACT_APP_work_COGNITO_USER_POOL_ID,
       APP_CLIENT_ID: process.env.REACT_APP_work_COGNITO_APP_CLIENT_ID,
       IDENTITY_POOL_ID: process.env.REACT_APP_work_COGNITO_IDENTITY_POOL_ID
-    }
+    },
+    social: {
+      FB: process.env.REACT_APP_work_FACEBOOK_APP_ID,
+    },
   },
 
 };

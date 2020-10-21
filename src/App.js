@@ -9,6 +9,7 @@ import { Auth } from "aws-amplify";
 import {onError} from "./libs/errorLib";
 import { initSentry } from './libs/errorLib';
 import ErrorBoundary from "./components/ErrorBoundary";
+import config from "./config";
 
 initSentry();
 
@@ -16,9 +17,14 @@ function App() {
   const history = useHistory();
 
   const [isAuthenticated, userHasAuthenticated] = useState(false);
+  const [fbIdentityId, setFbIdentityId] = useState();// We set this when the user logs in with facebook so we can:
+  // * Hide the buttons to change email and password in settings
+  // * As Amplify doesn't set correctly the identityId when user logs in with facebook, Storage.vault.put fails
+  // so we'll use AWS.S3().puObject instead
   const [isAuthenticating, setIsAuthenticating] = useState(true);
 
   useEffect(() => {
+    loadFacebookSDK();
     onLoad();
   }, []);
 
@@ -35,6 +41,25 @@ function App() {
     }
 
     setIsAuthenticating(false);
+  }
+
+  function loadFacebookSDK() {
+    window.fbAsyncInit = function() {
+      window.FB.init({
+        appId            : config.social.FB,
+        cookie           : true,
+        xfbml            : true,
+        version          : 'v8.0'
+      });
+    };
+
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
   }
 
   async function handleLogout() {
@@ -76,7 +101,7 @@ function App() {
         </Navbar.Collapse>
       </Navbar>
       <ErrorBoundary>
-        <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+        <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated, fbIdentityId, setFbIdentityId }}>
           <Routes />
         </AppContext.Provider>
       </ErrorBoundary>
