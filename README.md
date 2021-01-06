@@ -1,4 +1,4 @@
-Frontend [Serverless Stack](https://serverless-stack.com) tutorial done, including Best Practices & Extra Credit.
+Frontend [Serverless Stack](https://serverless-stack.com) tutorial done, including Best Practices & Extra Credit. 
 
 ### ✨ [Demo](https://serverless-stack-s4nt14go.netlify.app)
 
